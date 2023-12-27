@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">News PBI Bank Mandiri</string>
+    <string name="mandiri_news">Mandiri News</string>
+    <string name="berita_terkini">Berita Terkini</string>
+    <string name="semua_berita">Semua berita</string>
+    <string name="unknown">Unknown author</string>
+</resources>
