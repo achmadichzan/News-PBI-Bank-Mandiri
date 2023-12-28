@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
-import com.achmadichzan.newspbibankmandiri.adapter.HeadlineAdapter.Companion.DIFF_CALLBACK
 import com.achmadichzan.newspbibankmandiri.databinding.NewsItemBinding
-import com.achmadichzan.newspbibankmandiri.response.ArticlesItem
+import com.achmadichzan.newspbibankmandiri.response.NewsArticleItem
 import com.bumptech.glide.Glide
 
-class NewsAdapter: ListAdapter<ArticlesItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
+class NewsAdapter: ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
 
     class NewsViewHolder(private val newsBinding: NewsItemBinding) : RecyclerView.ViewHolder(newsBinding.root){
-        fun bind(news: ArticlesItem) {
+        fun bind(news: NewsArticleItem) {
             newsBinding.tvTitle.text = news.title
             Glide.with(itemView)
                 .load(news.urlToImage)
@@ -36,12 +35,12 @@ class NewsAdapter: ListAdapter<ArticlesItem, NewsAdapter.NewsViewHolder>(DIFF_CA
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ArticlesItem>() {
-            override fun areItemsTheSame(oldItem: ArticlesItem, newItem: ArticlesItem): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NewsArticleItem>() {
+            override fun areItemsTheSame(oldItem: NewsArticleItem, newItem: NewsArticleItem): Boolean {
                 return oldItem.title == newItem.title
             }
 
-            override fun areContentsTheSame(oldItem: ArticlesItem, newItem: ArticlesItem): Boolean {
+            override fun areContentsTheSame(oldItem: NewsArticleItem, newItem: NewsArticleItem): Boolean {
                 return oldItem == newItem
             }
         }

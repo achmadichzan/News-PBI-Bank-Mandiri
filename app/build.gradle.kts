@@ -7,13 +7,13 @@ plugins {
 }
 
 androidComponents {
-    onVariants {
-        it.buildConfigFields.put(
+    onVariants { variant ->
+        variant.buildConfigFields.put(
             "BASE_URL", BuildConfigField(
                 "String", "\"https://newsapi.org/v2/\"", "base url"
             )
         )
-        it.buildConfigFields.put(
+        variant.buildConfigFields.put(
             "API_KEY", BuildConfigField(
                 "String", "\"e1ef1815b4e84a5aac34d8ce6dabc282\"", "api key"
             )
@@ -61,7 +61,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")

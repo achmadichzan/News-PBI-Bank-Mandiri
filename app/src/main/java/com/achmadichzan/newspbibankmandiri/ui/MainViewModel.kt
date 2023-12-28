@@ -1,33 +1,28 @@
 package com.achmadichzan.newspbibankmandiri.ui
 
-import android.content.Context
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.achmadichzan.newspbibankmandiri.response.ArticlesItem
-import com.achmadichzan.newspbibankmandiri.response.ArticlesItems
-import com.achmadichzan.newspbibankmandiri.response.HeadlineResponse
-import com.achmadichzan.newspbibankmandiri.response.NewsResponse
+import com.achmadichzan.newspbibankmandiri.response.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.response.HeadlineArticleItem
 import com.achmadichzan.newspbibankmandiri.retrofit.ApiConfig
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
-class MainViewModel(private val appContext: Context): ViewModel() {
+class MainViewModel(private val application: Application): ViewModel() {
 
-    private val _listNews = MutableLiveData<List<ArticlesItem?>?>()
-    val listNews: LiveData<List<ArticlesItem?>?> get() = _listNews
+    private val _listNews = MutableLiveData<List<NewsArticleItem?>?>()
+    val listNews: LiveData<List<NewsArticleItem?>?> get() = _listNews
 
-    private val _listHeadlines = MutableLiveData<List<ArticlesItems?>?>()
-    val listHeadlines: LiveData<List<ArticlesItems?>?> get() = _listHeadlines
+    private val _listHeadlines = MutableLiveData<List<HeadlineArticleItem?>?>()
+    val listHeadlines: LiveData<List<HeadlineArticleItem?>?> get() = _listHeadlines
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -42,64 +37,58 @@ class MainViewModel(private val appContext: Context): ViewModel() {
             _isLoading.value = true
             val currentDate = Calendar.getInstance()
             currentDate.add(Calendar.DAY_OF_MONTH, -1)
-
             val formattedDate = SimpleDateFormat(
-                "yyyy-MM-dd", Locale.getDefault()
+                "yyyy-MM-dd",
+                Locale.getDefault()
             ).format(currentDate.time)
 
-            val client = ApiConfig.getApiService(appContext).getNews(
-                query = query,
-                fromDate = formattedDate,
-                sortBy = "publishedAt"
-            )
-            Log.i(TAG, "getDate: $formattedDate")
+            try {
+                val newsResponse = withContext(Dispatchers.IO) {
+                    Log.d(TAG, "getNews: run on thread: ${Thread.currentThread().name}")
+                    ApiConfig.getApiService(application).getNews(
+                        query = query,
+                        fromDate = formattedDate,
+                        sortBy = "publishedAt"
+                    )
+                }
+                _isLoading.value = false
 
-            client.enqueue(object : Callback<NewsResponse> {
-                override fun onResponse(
-                    call: Call<NewsResponse>,
-                    response: Response<NewsResponse>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful) {
-                        _listNews.value = response.body()?.articles
-                        Log.i(TAG, "onResponse: getNews Succeed")
-                    } else {
-                        Log.e(TAG, "onFailure: ${response.message()}")
-                    }
+                if (newsResponse.newsArticle != null) {
+                    _listNews.value = newsResponse.newsArticle
+                    Log.d(TAG, "onResponse: getNews Succeed")
+                } else {
+                    Log.e(TAG, "onFailure: ${newsResponse.status}")
                 }
-                override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                    _isLoading.value = false
-                    Log.e(TAG, "Failed to get users: ${t.message}")
-                }
-            })
+            } catch (e: Exception) {
+                _isLoading.value = false
+                Log.e(TAG, "Failed to get news: ${e.message}")
+            }
         }
     }
 
     private fun getHeadlines(query: String) {
         viewModelScope.launch {
             _isLoading.value = true
-            val client = ApiConfig.getApiService(appContext).getHeadlines(
-                country = query,
-                category = "business"
-            )
-            client.enqueue(object : Callback<HeadlineResponse> {
-                override fun onResponse(
-                    call: Call<HeadlineResponse>,
-                    response: Response<HeadlineResponse>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful) {
-                        _listHeadlines.value = response.body()?.articles
-                        Log.i(TAG, "onResponse: getHeadlines Succeed")
-                    } else {
-                        Log.e(TAG, "onFailure: ${response.message()}")
-                    }
+            try {
+                val headlineResponse = withContext(Dispatchers.IO) {
+                    Log.d(TAG, "getHeadlines: run on thread: ${Thread.currentThread().name}")
+                    ApiConfig.getApiService(application).getHeadlines(
+                        country = query,
+                        category = "business"
+                    )
                 }
-                override fun onFailure(call: Call<HeadlineResponse>, t: Throwable) {
-                    _isLoading.value = false
-                    Log.e(TAG, "Failed to get users: ${t.message}")
+                _isLoading.value = false
+
+                if (headlineResponse.headlineArticle != null) {
+                    _listHeadlines.value = headlineResponse.headlineArticle
+                    Log.d(TAG, "onResponse: getHeadlines Succeed")
+                } else {
+                    Log.e(TAG, "onFailure: ${headlineResponse.status}")
                 }
-            })
+            } catch (t: Throwable) {
+                _isLoading.value = false
+                Log.e(TAG, "Failed to get headlines: ${t.message}")
+            }
         }
     }
 

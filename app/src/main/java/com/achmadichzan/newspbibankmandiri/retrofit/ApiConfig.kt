@@ -1,5 +1,6 @@
 package com.achmadichzan.newspbibankmandiri.retrofit
 
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -13,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 
 object ApiConfig {
-    fun getApiService(context: Context): ApiService {
+    fun getApiService(application: Application): ApiService {
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
             val requestHeaders = req.newBuilder()
@@ -22,11 +23,11 @@ object ApiConfig {
             chain.proceed(requestHeaders)
         }
 
-        val forceCacheInterceptor = ForceCacheInterceptor(context)
+        val forceCacheInterceptor = ForceCacheInterceptor(application)
 
         val client = OkHttpClient().newBuilder()
             .cache(Cache(File(
-                context.applicationContext.cacheDir, "http-cache"),
+                application.applicationContext.cacheDir, "http-cache"),
                 10L * 1024L * 1024L)
             )
             .addNetworkInterceptor(CacheInterceptor)

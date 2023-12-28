@@ -8,7 +8,7 @@ data class HeadlineResponse(
 	val totalResults: Int? = null,
 
 	@field:SerializedName("articles")
-	val articles: List<ArticlesItems?>? = null,
+	val headlineArticle: List<HeadlineArticleItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
@@ -23,7 +23,7 @@ data class Sources(
 	val id: String? = null
 )
 
-data class ArticlesItems(
+data class HeadlineArticleItem(
 
 	@field:SerializedName("publishedAt")
 	val publishedAt: String? = null,
