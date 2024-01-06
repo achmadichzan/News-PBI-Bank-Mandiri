@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.databinding.HeadlineItemBinding
 import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
 class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.HeadlineViewHolder>(DIFF_CALLBACK) {
@@ -21,7 +22,8 @@ class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.Headline
                     .error(R.drawable.no_image)
                     .into(ivHeadline)
                 hdAuthor.text = headline.author ?: root.context.getString(R.string.unknown)
-                hdDate.text = headline.publishedAt
+                val headlineDate = headline.publishedAt?.let { formatDate(it) }
+                hdDate.text = headlineDate
             }
         }
     }

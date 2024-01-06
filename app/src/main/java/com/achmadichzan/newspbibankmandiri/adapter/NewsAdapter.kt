@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.databinding.NewsItemBinding
 import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
 
@@ -22,7 +23,8 @@ class NewsAdapter: ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF
                     .error(R.drawable.no_image)
                     .into(ivItem)
                 tvAuthor.text = news.author ?: root.context.getString(R.string.unknown)
-                tvDate.text = news.publishedAt
+                val newsDate = news.publishedAt?.let { formatDate(it) }
+                tvDate.text = newsDate
             }
         }
     }
