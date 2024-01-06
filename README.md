@@ -7,8 +7,9 @@
 ## See the app preview below
 
 Tech stacks:
-- recylerview using DiffUtil for best practice
-- cardview
+- recyler view using DiffUtil for best practice
+- card view
+- swipe refresh
 - coroutines (Dispatcher, State Flow)
 - retrofit to get https://newsapi.org/ and to caching
 - Clean architecture
