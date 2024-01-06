@@ -1,29 +1,20 @@
-package com.achmadichzan.newspbibankmandiri.response
+package com.achmadichzan.newspbibankmandiri.data
 
 import com.google.gson.annotations.SerializedName
 
-data class HeadlineResponse(
+data class NewsResponse(
 
 	@field:SerializedName("totalResults")
 	val totalResults: Int? = null,
 
 	@field:SerializedName("articles")
-	val headlineArticle: List<HeadlineArticleItem?>? = null,
+	val newsArticle: List<NewsArticleItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class Sources(
-
-	@field:SerializedName("name")
-	val name: String? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null
-)
-
-data class HeadlineArticleItem(
+data class NewsArticleItem(
 
 	@field:SerializedName("publishedAt")
 	val publishedAt: String? = null,
@@ -32,13 +23,13 @@ data class HeadlineArticleItem(
 	val author: String? = null,
 
 	@field:SerializedName("urlToImage")
-	val urlToImage: Any? = null,
+	val urlToImage: String? = null,
 
 	@field:SerializedName("description")
-	val description: Any? = null,
+	val description: String? = null,
 
 	@field:SerializedName("source")
-	val source: Sources? = null,
+	val source: Source? = null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
@@ -47,5 +38,14 @@ data class HeadlineArticleItem(
 	val url: String? = null,
 
 	@field:SerializedName("content")
-	val content: Any? = null
+	val content: String? = null
+)
+
+data class Source(
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("id")
+	val id: Any? = null
 )

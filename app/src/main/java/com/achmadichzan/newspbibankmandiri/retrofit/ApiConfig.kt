@@ -45,7 +45,6 @@ object ApiConfig {
     }
 }
 
-
 class ForceCacheInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()

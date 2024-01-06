@@ -1,29 +1,29 @@
-package com.achmadichzan.newspbibankmandiri.response
+package com.achmadichzan.newspbibankmandiri.data
 
 import com.google.gson.annotations.SerializedName
 
-data class NewsResponse(
+data class HeadlineResponse(
 
 	@field:SerializedName("totalResults")
 	val totalResults: Int? = null,
 
 	@field:SerializedName("articles")
-	val newsArticle: List<NewsArticleItem?>? = null,
+	val headlineArticle: List<HeadlineArticleItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class Source(
+data class Sources(
 
 	@field:SerializedName("name")
 	val name: String? = null,
 
 	@field:SerializedName("id")
-	val id: Any? = null
+	val id: String? = null
 )
 
-data class NewsArticleItem(
+data class HeadlineArticleItem(
 
 	@field:SerializedName("publishedAt")
 	val publishedAt: String? = null,
@@ -35,10 +35,10 @@ data class NewsArticleItem(
 	val urlToImage: String? = null,
 
 	@field:SerializedName("description")
-	val description: String? = null,
+	val description: Any? = null,
 
 	@field:SerializedName("source")
-	val source: Source? = null,
+	val source: Sources? = null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
@@ -47,5 +47,5 @@ data class NewsArticleItem(
 	val url: String? = null,
 
 	@field:SerializedName("content")
-	val content: String? = null
+	val content: Any? = null
 )

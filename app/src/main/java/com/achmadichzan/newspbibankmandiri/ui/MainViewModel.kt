@@ -2,14 +2,14 @@ package com.achmadichzan.newspbibankmandiri.ui
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.achmadichzan.newspbibankmandiri.response.NewsArticleItem
-import com.achmadichzan.newspbibankmandiri.response.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.retrofit.ApiConfig
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -18,17 +18,17 @@ import java.util.Locale
 
 class MainViewModel(private val application: Application): ViewModel() {
 
-    private val _listNews = MutableLiveData<List<NewsArticleItem?>?>()
-    val listNews: LiveData<List<NewsArticleItem?>?> get() = _listNews
+    private val _listNews = MutableStateFlow<List<NewsArticleItem?>?>(null)
+    val listNews: StateFlow<List<NewsArticleItem?>?> get() = _listNews
 
-    private val _listHeadlines = MutableLiveData<List<HeadlineArticleItem?>?>()
-    val listHeadlines: LiveData<List<HeadlineArticleItem?>?> get() = _listHeadlines
+    private val _listHeadlines = MutableStateFlow<List<HeadlineArticleItem?>?>(null)
+    val listHeadlines: StateFlow<List<HeadlineArticleItem?>?> get() = _listHeadlines
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> get() = _isLoading
 
     init {
-        getNews("Indonesia")
+        getNews("indonesia")
         getHeadlines("id")
     }
 
@@ -51,10 +51,11 @@ class MainViewModel(private val application: Application): ViewModel() {
                         sortBy = "publishedAt"
                     )
                 }
-                _isLoading.value = false
 
                 if (newsResponse.newsArticle != null) {
                     _listNews.value = newsResponse.newsArticle
+
+                    _isLoading.value = false
                     Log.d(TAG, "onResponse: getNews Succeed")
                 } else {
                     Log.e(TAG, "onFailure: ${newsResponse.status}")
@@ -77,10 +78,11 @@ class MainViewModel(private val application: Application): ViewModel() {
                         category = "business"
                     )
                 }
-                _isLoading.value = false
 
                 if (headlineResponse.headlineArticle != null) {
                     _listHeadlines.value = headlineResponse.headlineArticle
+
+                    _isLoading.value = false
                     Log.d(TAG, "onResponse: getHeadlines Succeed")
                 } else {
                     Log.e(TAG, "onFailure: ${headlineResponse.status}")

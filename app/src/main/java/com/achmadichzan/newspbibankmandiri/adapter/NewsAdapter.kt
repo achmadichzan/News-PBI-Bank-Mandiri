@@ -7,20 +7,23 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.databinding.NewsItemBinding
-import com.achmadichzan.newspbibankmandiri.response.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
 import com.bumptech.glide.Glide
+
 
 class NewsAdapter: ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
 
     class NewsViewHolder(private val newsBinding: NewsItemBinding) : RecyclerView.ViewHolder(newsBinding.root){
         fun bind(news: NewsArticleItem) {
-            newsBinding.tvTitle.text = news.title
-            Glide.with(itemView)
-                .load(news.urlToImage)
-                .error(R.drawable.no_image)
-                .into(newsBinding.ivItem)
-            newsBinding.tvAuthor.text = news.author ?: newsBinding.root.context.getString(R.string.unknown)
-            newsBinding.tvDate.text = news.publishedAt
+            newsBinding.apply {
+                tvTitle.text = news.title
+                Glide.with(itemView)
+                    .load(news.urlToImage)
+                    .error(R.drawable.no_image)
+                    .into(ivItem)
+                tvAuthor.text = news.author ?: root.context.getString(R.string.unknown)
+                tvDate.text = news.publishedAt
+            }
         }
     }
 

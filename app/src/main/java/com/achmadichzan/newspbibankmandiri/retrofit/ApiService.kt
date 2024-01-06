@@ -1,7 +1,7 @@
 package com.achmadichzan.newspbibankmandiri.retrofit
 
-import com.achmadichzan.newspbibankmandiri.response.HeadlineResponse
-import com.achmadichzan.newspbibankmandiri.response.NewsResponse
+import com.achmadichzan.newspbibankmandiri.data.HeadlineResponse
+import com.achmadichzan.newspbibankmandiri.data.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

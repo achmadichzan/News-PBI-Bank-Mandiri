@@ -7,20 +7,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.databinding.HeadlineItemBinding
-import com.achmadichzan.newspbibankmandiri.response.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
 import com.bumptech.glide.Glide
 
 class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.HeadlineViewHolder>(DIFF_CALLBACK) {
 
     class HeadlineViewHolder(private val headlineBinding: HeadlineItemBinding) : RecyclerView.ViewHolder(headlineBinding.root){
         fun bind(headline: HeadlineArticleItem) {
-            headlineBinding.tvHeadline.text = headline.title
-            Glide.with(itemView)
-                .load(headline.urlToImage)
-                .error(R.drawable.no_image)
-                .into(headlineBinding.ivHeadline)
-            headlineBinding.hdAuthor.text = headline.author ?: headlineBinding.root.context.getString(R.string.unknown)
-            headlineBinding.hdDate.text = headline.publishedAt
+            headlineBinding.apply {
+                tvHeadline.text = headline.title
+                Glide.with(itemView)
+                    .load(headline.urlToImage)
+                    .error(R.drawable.no_image)
+                    .into(ivHeadline)
+                hdAuthor.text = headline.author ?: root.context.getString(R.string.unknown)
+                hdDate.text = headline.publishedAt
+            }
         }
     }
 
@@ -30,8 +32,8 @@ class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.Headline
     }
 
     override fun onBindViewHolder(holder: HeadlineViewHolder, position: Int) {
-        val news = getItem(position)
-        holder.bind(news)
+        val headline = getItem(position)
+        holder.bind(headline)
     }
 
     companion object {
