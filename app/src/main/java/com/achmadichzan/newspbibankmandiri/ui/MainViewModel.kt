@@ -27,12 +27,12 @@ class MainViewModel(private val application: Application): ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> get() = _isLoading
 
-    init {
+    fun refreshData() {
         getNews("indonesia")
         getHeadlines("id")
     }
 
-    private fun getNews(query: String) {
+    internal fun getNews(query: String) {
         viewModelScope.launch {
             _isLoading.value = true
             val currentDate = Calendar.getInstance()
@@ -67,7 +67,7 @@ class MainViewModel(private val application: Application): ViewModel() {
         }
     }
 
-    private fun getHeadlines(query: String) {
+    internal fun getHeadlines(query: String) {
         viewModelScope.launch {
             _isLoading.value = true
             try {

@@ -26,6 +26,7 @@
             android:adjustViewBounds="true"
             android:padding="4dp"
             android:scaleType="centerCrop"
+            android:contentDescription="@string/headline_news_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
