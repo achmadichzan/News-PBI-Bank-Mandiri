@@ -18,4 +18,9 @@ Tech stacks:
 </p>
 
 ## See how I developed the app below
-[![YOUTUBE LINK](https://i.ytimg.com/vi/ipzqSF6tesw/hqdefault.jpg?sqp=-oaymwE1CKgBEF5IVfKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGGUgWChJMA8=\u0026rs=AOn4CLC8Cxe3sSGgSDkv2xTWAfZf_vhkSQ)](https://youtu.be/ipzqSF6tesw)
+
+<p align="center">
+  <a href="https://youtu.be/ipzqSF6tesw">
+    <img src="https://i.ytimg.com/vi/ipzqSF6tesw/hqdefault.jpg?sqp=-oaymwE1CKgBEF5IVfKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGGUgWChJMA8=\u0026rs=AOn4CLC8Cxe3sSGgSDkv2xTWAfZf_vhkSQ" alt="YOUTUBE LINK">
+  </a>
+</p>
