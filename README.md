@@ -6,6 +6,16 @@
 
 ## See the app preview below
 
+Tech stacks:
+- recylerview using DiffUtil for best practice
+- cardview
+- coroutines (Dispatcher, State Flow)
+- retrofit to get https://newsapi.org/ and to caching
+- Clean architecture
+
 <p align="center">
     <img src="https://github.com/achmadichzan/News-PBI-Bank-Mandiri/assets/122871669/b6b57408-614b-4cd5-a0fb-38db64589e1f" width="50%" height="30%">
 </p>
+
+## See how I developed the app below
+[![YOUTUBE LINK](https://i.ytimg.com/vi/ipzqSF6tesw/hqdefault.jpg?sqp=-oaymwE1CKgBEF5IVfKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGGUgWChJMA8=\u0026rs=AOn4CLC8Cxe3sSGgSDkv2xTWAfZf_vhkSQ)](https://youtu.be/ipzqSF6tesw)
