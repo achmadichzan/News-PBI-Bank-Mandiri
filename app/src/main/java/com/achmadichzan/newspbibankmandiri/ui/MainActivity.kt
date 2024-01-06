@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.rvNews.layoutManager = LinearLayoutManager(this)
+
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.listNews.collect { news ->
@@ -61,19 +63,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//        mainViewModel.listHeadlines.observe(this) { headline ->
-//            headline?.let { setHeadlinesData(it) }
-//        }
-//
-//        binding.rvNews.layoutManager = LinearLayoutManager(this)
-//
-//        mainViewModel.listNews.observe(this) { news ->
-//            news?.let { setNewsData(it) }
-//        }
-//
-//        mainViewModel.isLoading.observe(this) {
-//            showLoading(it)
-//        }
     }
 
     private fun setHeadlinesData(headline: List<HeadlineArticleItem?>?) {
