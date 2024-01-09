@@ -11,10 +11,10 @@ import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
 import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
-class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.HeadlineViewHolder>(DIFF_CALLBACK) {
+class HeadlineAdapter(private val listener: OnHeadlineClickListener): ListAdapter<HeadlineArticleItem, HeadlineAdapter.HeadlineViewHolder>(DIFF_CALLBACK) {
 
-    class HeadlineViewHolder(private val headlineBinding: HeadlineItemBinding) : RecyclerView.ViewHolder(headlineBinding.root){
-        fun bind(headline: HeadlineArticleItem) {
+    inner class HeadlineViewHolder(private val headlineBinding: HeadlineItemBinding) : RecyclerView.ViewHolder(headlineBinding.root){
+        fun bind(headline: HeadlineArticleItem, listener: OnHeadlineClickListener) {
             headlineBinding.apply {
                 tvHeadline.text = headline.title
                 Glide.with(itemView)
@@ -22,8 +22,11 @@ class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.Headline
                     .error(R.drawable.no_image)
                     .into(ivHeadline)
                 hdAuthor.text = headline.author ?: root.context.getString(R.string.unknown)
-                val headlineDate = headline.publishedAt?.let { formatDate(it) }
-                hdDate.text = headlineDate
+                hdDate.text = headline.publishedAt?.let { formatDate(it) }
+                tvContent.text = headline.content
+                itemView.setOnClickListener {
+                    listener.onHeadlineClicked(headline)
+                }
             }
         }
     }
@@ -35,7 +38,11 @@ class HeadlineAdapter: ListAdapter<HeadlineArticleItem, HeadlineAdapter.Headline
 
     override fun onBindViewHolder(holder: HeadlineViewHolder, position: Int) {
         val headline = getItem(position)
-        holder.bind(headline)
+        holder.bind(headline, listener)
+    }
+
+    interface OnHeadlineClickListener {
+        fun onHeadlineClicked(user: HeadlineArticleItem)
     }
 
     companion object {

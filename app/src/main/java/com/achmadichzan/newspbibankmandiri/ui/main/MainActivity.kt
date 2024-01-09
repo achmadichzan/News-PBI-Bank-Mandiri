@@ -1,5 +1,6 @@
-package com.achmadichzan.newspbibankmandiri.ui
+package com.achmadichzan.newspbibankmandiri.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,16 +10,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.adapter.HeadlineAdapter
 import com.achmadichzan.newspbibankmandiri.adapter.NewsAdapter
 import com.achmadichzan.newspbibankmandiri.databinding.ActivityMainBinding
 import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.ui.detail.DetailFragment
+import com.achmadichzan.newspbibankmandiri.ui.detail.DetailNewsActivity
 import com.achmadichzan.newspbibankmandiri.util.ViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HeadlineAdapter.OnHeadlineClickListener, NewsAdapter.OnNewsClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
@@ -84,13 +88,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setHeadlinesData(headline: List<HeadlineArticleItem?>?) {
-        val adapter = HeadlineAdapter()
+        val adapter = HeadlineAdapter(this)
         adapter.submitList(headline)
         binding.rvHeadlines.adapter = adapter
     }
 
     private fun setNewsData(news: List<NewsArticleItem?>?) {
-        val adapter = NewsAdapter()
+        val adapter = NewsAdapter(this)
         adapter.submitList(news)
         binding.rvNews.adapter = adapter
     }
@@ -102,5 +106,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchData() {
         mainViewModel.refreshData()
+    }
+
+    override fun onHeadlineClicked(user: HeadlineArticleItem) {
+        val detailFragment = DetailFragment()
+        val bundle = Bundle()
+        bundle.putParcelable(DetailFragment.CONTENT, user)
+        detailFragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_activity, detailFragment, DetailFragment::class.java.simpleName)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun onNewsClicked(user: NewsArticleItem) {
+        val intent = Intent(applicationContext, DetailNewsActivity::class.java)
+        intent.putExtra(DetailNewsActivity.CONTENT, user)
+        startActivity(intent)
     }
 }

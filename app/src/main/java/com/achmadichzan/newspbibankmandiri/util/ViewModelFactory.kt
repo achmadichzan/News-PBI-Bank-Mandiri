@@ -3,7 +3,7 @@ package com.achmadichzan.newspbibankmandiri.util
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.achmadichzan.newspbibankmandiri.ui.MainViewModel
+import com.achmadichzan.newspbibankmandiri.ui.main.MainViewModel
 
 class ViewModelFactory (private val application: Application) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
