@@ -12,10 +12,10 @@ import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
 
-class NewsAdapter: ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
+class NewsAdapter(private val listener: OnNewsClickListener): ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
 
-    class NewsViewHolder(private val newsBinding: NewsItemBinding) : RecyclerView.ViewHolder(newsBinding.root){
-        fun bind(news: NewsArticleItem) {
+    inner class NewsViewHolder(private val newsBinding: NewsItemBinding) : RecyclerView.ViewHolder(newsBinding.root){
+        fun bind(news: NewsArticleItem, listener: OnNewsClickListener) {
             newsBinding.apply {
                 tvTitle.text = news.title
                 Glide.with(itemView)
@@ -23,8 +23,11 @@ class NewsAdapter: ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF
                     .error(R.drawable.no_image)
                     .into(ivItem)
                 tvAuthor.text = news.author ?: root.context.getString(R.string.unknown)
-                val newsDate = news.publishedAt?.let { formatDate(it) }
-                tvDate.text = newsDate
+                tvDate.text = news.publishedAt?.let { formatDate(it) }
+                tvContent?.text = news.content
+                itemView.setOnClickListener {
+                    listener.onNewsClicked(news)
+                }
             }
         }
     }
@@ -36,7 +39,11 @@ class NewsAdapter: ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val news = getItem(position)
-        holder.bind(news)
+        holder.bind(news, listener)
+    }
+
+    interface OnNewsClickListener {
+        fun onNewsClicked(user: NewsArticleItem)
     }
 
     companion object {

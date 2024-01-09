@@ -1,7 +1,10 @@
 package com.achmadichzan.newspbibankmandiri.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class NewsResponse(
 
 	@field:SerializedName("totalResults")
@@ -12,8 +15,9 @@ data class NewsResponse(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
+) : Parcelable
 
+@Parcelize
 data class NewsArticleItem(
 
 	@field:SerializedName("publishedAt")
@@ -39,13 +43,14 @@ data class NewsArticleItem(
 
 	@field:SerializedName("content")
 	val content: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class Source(
 
 	@field:SerializedName("name")
 	val name: String? = null,
 
 	@field:SerializedName("id")
-	val id: Any? = null
-)
+	val id: String? = null
+) : Parcelable

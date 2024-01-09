@@ -7,4 +7,5 @@
     <string name="bank_mandiri_logo">Bank Mandiri logo</string>
     <string name="headline_news_image">Headline news image</string>
     <string name="news_list_image">News list image</string>
+    <string name="news_image">News image</string>
 </resources>

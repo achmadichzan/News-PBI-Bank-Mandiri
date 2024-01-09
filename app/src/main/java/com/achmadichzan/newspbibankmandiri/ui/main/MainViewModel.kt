@@ -1,4 +1,4 @@
-package com.achmadichzan.newspbibankmandiri.ui
+package com.achmadichzan.newspbibankmandiri.ui.main
 
 import android.app.Application
 import android.util.Log
@@ -29,7 +29,7 @@ class MainViewModel(private val application: Application): ViewModel() {
 
     fun refreshData() {
         getNews("indonesia")
-        getHeadlines("id")
+        getHeadlines("us")
     }
 
     internal fun getNews(query: String) {
