@@ -24,7 +24,7 @@ class NewsAdapter(private val listener: OnNewsClickListener): ListAdapter<NewsAr
                     .into(ivItem)
                 tvAuthor.text = news.author ?: root.context.getString(R.string.unknown)
                 tvDate.text = news.publishedAt?.let { formatDate(it) }
-                tvContent?.text = news.content
+                tvContent.text = news.content
                 itemView.setOnClickListener {
                     listener.onNewsClicked(news)
                 }

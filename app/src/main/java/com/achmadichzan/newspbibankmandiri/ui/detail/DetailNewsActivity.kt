@@ -1,14 +1,14 @@
 package com.achmadichzan.newspbibankmandiri.ui.detail
 
-import android.content.Intent
-import android.os.Build.VERSION.SDK_INT
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.LeadingMarginSpan
+import androidx.appcompat.app.AppCompatActivity
 import com.achmadichzan.newspbibankmandiri.R
-import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
 import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.databinding.ActivityDetailNewsBinding
+import com.achmadichzan.newspbibankmandiri.util.addIndentation
 import com.achmadichzan.newspbibankmandiri.util.parcelable
 import com.bumptech.glide.Glide
 
@@ -32,7 +32,7 @@ class DetailNewsActivity : AppCompatActivity() {
                 .error(R.drawable.no_image)
                 .into(ivaNews)
             tvaTitle.text = news.title
-            tvaDescription.text = news.content
+            tvaDescription.text = addIndentation(news.content ?: "No description")
         }
     }
 

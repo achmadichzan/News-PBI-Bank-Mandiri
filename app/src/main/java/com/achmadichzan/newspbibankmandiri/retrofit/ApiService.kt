@@ -19,4 +19,5 @@ interface ApiService {
         @Query("country") country: String,
         @Query("category") category: String
     ): HeadlineResponse
+
 }

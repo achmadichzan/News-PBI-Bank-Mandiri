@@ -1,11 +1,11 @@
 package com.achmadichzan.newspbibankmandiri.ui.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +13,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.adapter.HeadlineAdapter
 import com.achmadichzan.newspbibankmandiri.adapter.NewsAdapter
-import com.achmadichzan.newspbibankmandiri.databinding.ActivityMainBinding
-import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.databinding.ActivityMainBinding
 import com.achmadichzan.newspbibankmandiri.ui.detail.DetailFragment
 import com.achmadichzan.newspbibankmandiri.ui.detail.DetailNewsActivity
 import com.achmadichzan.newspbibankmandiri.util.ViewModelFactory
@@ -25,7 +25,9 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(), HeadlineAdapter.OnHeadlineClickListener, NewsAdapter.OnNewsClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel by viewModels<MainViewModel> {
+        ViewModelFactory(application)
+    }
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +47,6 @@ class MainActivity : AppCompatActivity(), HeadlineAdapter.OnHeadlineClickListene
                 }
             }
         }
-
-        mainViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(application)
-        )[MainViewModel::class.java]
 
         fetchData()
 

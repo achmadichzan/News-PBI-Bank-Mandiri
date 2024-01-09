@@ -76,4 +76,16 @@
         app:layout_constraintTop_toTopOf="@+id/tv_author"
         tools:text="1 Jan 2024" />
 
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:justificationMode="inter_word"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_author"
+        app:layout_constraintEnd_toEndOf="@+id/tv_author"
+        app:layout_constraintStart_toStartOf="@+id/tv_author"
+        app:layout_constraintTop_toTopOf="@+id/tv_author" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

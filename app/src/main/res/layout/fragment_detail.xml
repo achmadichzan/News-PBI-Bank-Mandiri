@@ -5,14 +5,15 @@
     android:id="@+id/detail_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@color/material_dynamic_primary100"
+    android:padding="16dp"
     tools:context=".ui.detail.DetailFragment">
 
     <ImageView
         android:id="@+id/ivf_news"
-        android:layout_width="250dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:scaleType="fitCenter"
         android:contentDescription="@string/news_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,16 +25,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivf_news"
-        tools:text="Jaddi gini ini judul ngab"/>
+        tools:text="Jaddi gini ini judul ngab" />
 
     <TextView
         android:id="@+id/tvf_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="1.2"
+        android:justificationMode="inter_word"
+        app:layout_constraintStart_toStartOf="@+id/tvf_title"
         app:layout_constraintTop_toBottomOf="@+id/tvf_title"
         tools:text="Kalo ini deskripsi ngab" />
 
