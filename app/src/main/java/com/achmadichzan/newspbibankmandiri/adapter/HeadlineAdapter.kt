@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.databinding.HeadlineItemBinding
-import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.model.HeadlineArticleItem
 import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
@@ -23,7 +23,6 @@ class HeadlineAdapter(private val listener: OnHeadlineClickListener): ListAdapte
                     .into(ivHeadline)
                 hdAuthor.text = headline.author ?: root.context.getString(R.string.unknown)
                 hdDate.text = headline.publishedAt?.let { formatDate(it) }
-                tvContent.text = headline.content
                 itemView.setOnClickListener {
                     listener.onHeadlineClicked(headline)
                 }

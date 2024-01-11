@@ -13,8 +13,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.adapter.HeadlineAdapter
 import com.achmadichzan.newspbibankmandiri.adapter.NewsAdapter
-import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
-import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.model.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.model.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.databinding.ActivityMainBinding
 import com.achmadichzan.newspbibankmandiri.ui.detail.DetailFragment
 import com.achmadichzan.newspbibankmandiri.ui.detail.DetailNewsActivity
@@ -74,12 +74,8 @@ class MainActivity : AppCompatActivity(), HeadlineAdapter.OnHeadlineClickListene
             }
         }
 
-        lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.isLoading.collect {
-                    showLoading(it)
-                }
-            }
+        mainViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
     }

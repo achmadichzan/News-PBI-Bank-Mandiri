@@ -27,7 +27,7 @@ object ApiConfig {
 
         val client = OkHttpClient().newBuilder()
             .cache(Cache(File(
-                application.applicationContext.cacheDir, "http-cache"),
+                application.cacheDir, "http-cache"),
                 10L * 1024L * 1024L)
             )
             .addNetworkInterceptor(CacheInterceptor)

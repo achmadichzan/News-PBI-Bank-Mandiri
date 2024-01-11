@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.achmadichzan.newspbibankmandiri.R
 import com.achmadichzan.newspbibankmandiri.databinding.NewsItemBinding
-import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.model.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
@@ -24,7 +24,6 @@ class NewsAdapter(private val listener: OnNewsClickListener): ListAdapter<NewsAr
                     .into(ivItem)
                 tvAuthor.text = news.author ?: root.context.getString(R.string.unknown)
                 tvDate.text = news.publishedAt?.let { formatDate(it) }
-                tvContent.text = news.content
                 itemView.setOnClickListener {
                     listener.onNewsClicked(news)
                 }

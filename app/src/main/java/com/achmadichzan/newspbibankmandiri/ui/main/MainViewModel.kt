@@ -2,10 +2,12 @@ package com.achmadichzan.newspbibankmandiri.ui.main
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
-import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.model.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.model.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.retrofit.ApiConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +26,8 @@ class MainViewModel(private val application: Application): ViewModel() {
     private val _listHeadlines = MutableStateFlow<List<HeadlineArticleItem?>?>(null)
     val listHeadlines: StateFlow<List<HeadlineArticleItem?>?> get() = _listHeadlines
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> get() = _isLoading
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     fun refreshData() {
         getNews("indonesia")
@@ -53,7 +55,7 @@ class MainViewModel(private val application: Application): ViewModel() {
                 }
 
                 if (newsResponse.newsArticle != null) {
-                    _listNews.value = newsResponse.newsArticle
+                    _listNews.emit(newsResponse.newsArticle)
 
                     _isLoading.value = false
                     Log.d(TAG, "onResponse: getNews Succeed")
@@ -80,7 +82,7 @@ class MainViewModel(private val application: Application): ViewModel() {
                 }
 
                 if (headlineResponse.headlineArticle != null) {
-                    _listHeadlines.value = headlineResponse.headlineArticle
+                    _listHeadlines.emit(headlineResponse.headlineArticle)
 
                     _isLoading.value = false
                     Log.d(TAG, "onResponse: getHeadlines Succeed")

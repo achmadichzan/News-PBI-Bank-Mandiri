@@ -21,8 +21,8 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
             android:contentDescription="@string/news_list_image"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
@@ -34,21 +34,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:maxLines="4"
         android:ellipsize="end"
         android:justificationMode="inter_word"
+        android:maxLines="4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="wrap"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/cardView"
-        app:layout_constraintHeight_max="wrap"
         tools:text="A Tesla engineer was allegedly attacked by a robot at a factory near Austin, according to media reports. The 2021 injury report claims the robot, which was designed to move aluminum car parts, dug its metal claws into the engineer’s back and arm, leaving a “t…" />
 
     <TextView
         android:id="@+id/tv_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:drawablePadding="4dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -57,8 +56,7 @@
         android:textSize="11sp"
         app:drawableLeftCompat="@drawable/user_avatar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
         tools:text="Author Achmad Ichzan" />
 
     <TextView
@@ -68,24 +66,11 @@
         android:layout_marginEnd="8dp"
         android:drawablePadding="4dp"
         android:gravity="center_vertical"
-        android:maxLength="10"
         android:textSize="11sp"
         app:drawableLeftCompat="@drawable/calendar_today"
         app:layout_constraintBottom_toBottomOf="@+id/tv_author"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_author"
         tools:text="1 Jan 2024" />
-
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:justificationMode="inter_word"
-        android:ellipsize="end"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_author"
-        app:layout_constraintEnd_toEndOf="@+id/tv_author"
-        app:layout_constraintStart_toStartOf="@+id/tv_author"
-        app:layout_constraintTop_toTopOf="@+id/tv_author" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

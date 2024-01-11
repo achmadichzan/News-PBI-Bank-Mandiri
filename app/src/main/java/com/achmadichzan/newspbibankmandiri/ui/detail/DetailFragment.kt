@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.achmadichzan.newspbibankmandiri.R
-import com.achmadichzan.newspbibankmandiri.data.HeadlineArticleItem
+import com.achmadichzan.newspbibankmandiri.model.HeadlineArticleItem
 import com.achmadichzan.newspbibankmandiri.databinding.FragmentDetailBinding
 import com.achmadichzan.newspbibankmandiri.util.addIndentation
 import com.achmadichzan.newspbibankmandiri.util.parcelable
 import com.bumptech.glide.Glide
-
 
 class DetailFragment : Fragment() {
 

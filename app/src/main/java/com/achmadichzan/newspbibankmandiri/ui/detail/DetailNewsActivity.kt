@@ -1,12 +1,9 @@
 package com.achmadichzan.newspbibankmandiri.ui.detail
 
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.LeadingMarginSpan
 import androidx.appcompat.app.AppCompatActivity
 import com.achmadichzan.newspbibankmandiri.R
-import com.achmadichzan.newspbibankmandiri.data.NewsArticleItem
+import com.achmadichzan.newspbibankmandiri.model.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.databinding.ActivityDetailNewsBinding
 import com.achmadichzan.newspbibankmandiri.util.addIndentation
 import com.achmadichzan.newspbibankmandiri.util.parcelable

@@ -5,7 +5,7 @@
     android:id="@+id/detail_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_primary100"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp"
     tools:context=".ui.detail.DetailFragment">
 
