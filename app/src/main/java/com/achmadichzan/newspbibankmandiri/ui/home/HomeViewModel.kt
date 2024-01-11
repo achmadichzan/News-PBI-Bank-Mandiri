@@ -1,6 +1,7 @@
-package com.achmadichzan.newspbibankmandiri.ui.main
+package com.achmadichzan.newspbibankmandiri.ui.home
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class MainViewModel(private val application: Application): ViewModel() {
+class HomeViewModel(private val application: Application): ViewModel() {
 
     private val _listNews = MutableStateFlow<List<NewsArticleItem?>?>(null)
     val listNews: StateFlow<List<NewsArticleItem?>?> get() = _listNews

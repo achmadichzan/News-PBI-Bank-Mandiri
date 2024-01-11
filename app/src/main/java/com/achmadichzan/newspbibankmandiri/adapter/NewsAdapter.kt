@@ -11,7 +11,6 @@ import com.achmadichzan.newspbibankmandiri.model.NewsArticleItem
 import com.achmadichzan.newspbibankmandiri.util.formatDate
 import com.bumptech.glide.Glide
 
-
 class NewsAdapter(private val listener: OnNewsClickListener): ListAdapter<NewsArticleItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
 
     inner class NewsViewHolder(private val newsBinding: NewsItemBinding) : RecyclerView.ViewHolder(newsBinding.root){
