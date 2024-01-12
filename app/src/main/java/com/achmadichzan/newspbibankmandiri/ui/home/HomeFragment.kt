@@ -2,10 +2,11 @@ package com.achmadichzan.newspbibankmandiri.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -25,7 +26,8 @@ import com.achmadichzan.newspbibankmandiri.util.ViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAdapter.OnNewsClickListener {
+class HomeFragment
+    : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAdapter.OnNewsClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -66,57 +68,30 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
             false
         )
 
-        lifecycleScope.launch{
-            homeViewModel.listHeadlines.collect { headline ->
-                headline?.let { setHeadlinesData(it) }
+        lifecycleScope.launch {
+            homeViewModel.headlineState.collect { headlineState ->
+                setHeadlinesData(headlineState.listHeadlines)
+
+                if (headlineState.isHeadlineLoading) binding.pbHeadline.visibility = View.VISIBLE
+                else binding.pbHeadline.visibility = View.GONE
+
+                if (headlineState.errorHeadlineText) binding.tvhError.visibility = View.VISIBLE
+                else binding.tvhError.visibility = View.GONE
             }
         }
 
         binding.rvNews.layoutManager = LinearLayoutManager(requireContext())
 
-        lifecycleScope.launch{
-            homeViewModel.listNews.collect { news ->
-                news?.let { setNewsData(it) }
-            }
-        }
-
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                homeViewModel.isHeadlineLoading.collect {
-                    if (it) binding.pbHeadline.visibility = View.VISIBLE
-                    else binding.pbHeadline.visibility = View.GONE
-                }
-            }
-        }
+            homeViewModel.newsState.collect { newsState ->
+                setNewsData(newsState.listNews)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                homeViewModel.isNewsLoading.collect {
-                    if (it) binding.pbNews.visibility = View.VISIBLE
-                    else binding.pbNews.visibility = View.GONE
-                }
-            }
-        }
+                if (newsState.isNewsLoading) binding.pbNews.visibility = View.VISIBLE
+                else binding.pbNews.visibility = View.GONE
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                homeViewModel.errorHeadlineText.collect { errorMessage ->
-                    errorMessage.let {
-                        if (it) binding.tvhError.visibility = View.VISIBLE
-                        else binding.tvhError.visibility = View.GONE
-                    }
-                }
-            }
-        }
+                if (newsState.errorNewsText) binding.tvnError.visibility = View.VISIBLE
+                else binding.tvnError.visibility = View.GONE
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                homeViewModel.errorNewsText.collect { errorMessage ->
-                    errorMessage.let {
-                        if (it) binding.tvnError.visibility = View.VISIBLE
-                        else binding.tvnError.visibility = View.GONE
-                    }
-                }
             }
         }
 
