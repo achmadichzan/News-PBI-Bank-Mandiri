@@ -2,6 +2,7 @@ package com.achmadichzan.newspbibankmandiri.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAdapter.OnNewsClickListener {
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding
+    private val binding get() = _binding!!
 
     private val homeViewModel by viewModels<HomeViewModel> {
         ViewModelFactory(requireActivity().application)
@@ -46,10 +47,10 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
 
         val lifecycleScope = viewLifecycleOwner.lifecycleScope
 
-        swipeRefresh = binding?.swipeRefresh!!
+        swipeRefresh = binding.swipeRefresh
 
         swipeRefresh.setOnRefreshListener {
-            fetchData()
+            refreshData()
 
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.RESUMED){
@@ -59,9 +60,7 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
             }
         }
 
-        fetchData()
-
-        binding?.rvHeadlines?.layoutManager = LinearLayoutManager(
+        binding.rvHeadlines.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL,
             false
@@ -73,7 +72,7 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
             }
         }
 
-        binding?.rvNews?.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvNews.layoutManager = LinearLayoutManager(requireContext())
 
         lifecycleScope.launch{
             homeViewModel.listNews.collect { news ->
@@ -81,8 +80,44 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
             }
         }
 
-        homeViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED){
+                homeViewModel.isHeadlineLoading.collect {
+                    if (it) binding.pbHeadline.visibility = View.VISIBLE
+                    else binding.pbHeadline.visibility = View.GONE
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED){
+                homeViewModel.isNewsLoading.collect {
+                    if (it) binding.pbNews.visibility = View.VISIBLE
+                    else binding.pbNews.visibility = View.GONE
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                homeViewModel.errorHeadlineText.collect { errorMessage ->
+                    errorMessage.let {
+                        if (it) binding.tvhError.visibility = View.VISIBLE
+                        else binding.tvhError.visibility = View.GONE
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                homeViewModel.errorNewsText.collect { errorMessage ->
+                    errorMessage.let {
+                        if (it) binding.tvnError.visibility = View.VISIBLE
+                        else binding.tvnError.visibility = View.GONE
+                    }
+                }
+            }
         }
 
     }
@@ -90,22 +125,17 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
     private fun setHeadlinesData(headline: List<HeadlineArticleItem?>?) {
         val adapter = HeadlineAdapter(this)
         adapter.submitList(headline)
-        binding?.rvHeadlines?.adapter = adapter
+        binding.rvHeadlines.adapter = adapter
     }
 
     private fun setNewsData(news: List<NewsArticleItem?>?) {
         val adapter = NewsAdapter(this)
         adapter.submitList(news)
-        binding?.rvNews?.adapter = adapter
+        binding.rvNews.adapter = adapter
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding?.pbHeadline?.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding?.pbNews?.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun fetchData() {
-        homeViewModel.refreshData()
+    private fun refreshData() {
+        homeViewModel.fetchData()
     }
 
     override fun onHeadlineClicked(user: HeadlineArticleItem) {
@@ -125,5 +155,4 @@ class HomeFragment : Fragment(), HeadlineAdapter.OnHeadlineClickListener, NewsAd
         intent.putExtra(DetailNewsActivity.CONTENT, user)
         startActivity(intent)
     }
-
 }

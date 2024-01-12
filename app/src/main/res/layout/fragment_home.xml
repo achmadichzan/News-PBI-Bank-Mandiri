@@ -71,6 +71,35 @@
                     tools:listitem="@layout/headline_item" />
 
                 <TextView
+                    android:id="@+id/tvhError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/headline_failed"
+                    android:visibility="gone"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_headlines"
+                    app:layout_constraintEnd_toEndOf="@+id/rv_headlines"
+                    app:layout_constraintStart_toStartOf="@+id/rv_headlines"
+                    app:layout_constraintTop_toTopOf="@+id/rv_headlines"
+                    tools:text="Error headline"
+                    tools:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/pbHeadline"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_headlines"
+                    app:layout_constraintEnd_toEndOf="@+id/rv_headlines"
+                    app:layout_constraintStart_toStartOf="@+id/rv_headlines"
+                    app:layout_constraintTop_toTopOf="@+id/rv_headlines"
+                    tools:visibility="visible" />
+
+                <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,6 +121,23 @@
                     tools:itemCount="4"
                     tools:listitem="@layout/news_item" />
 
+                <TextView
+                    android:id="@+id/tvnError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/news_failed"
+                    android:visibility="gone"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_news"
+                    app:layout_constraintEnd_toEndOf="@+id/rv_news"
+                    app:layout_constraintStart_toStartOf="@+id/rv_news"
+                    app:layout_constraintTop_toTopOf="@+id/rv_news"
+                    tools:text="Error news"
+                    tools:visibility="visible"/>
+
                 <ProgressBar
                     android:id="@+id/pbNews"
                     style="?android:attr/progressBarStyle"
@@ -102,18 +148,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/rv_news"
                     app:layout_constraintStart_toStartOf="@+id/rv_news"
                     app:layout_constraintTop_toTopOf="@+id/rv_news"
-                    tools:visibility="visible" />
-
-                <ProgressBar
-                    android:id="@+id/pbHeadline"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_headlines"
-                    app:layout_constraintEnd_toEndOf="@+id/rv_headlines"
-                    app:layout_constraintStart_toStartOf="@+id/rv_headlines"
-                    app:layout_constraintTop_toTopOf="@+id/rv_headlines"
                     tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
